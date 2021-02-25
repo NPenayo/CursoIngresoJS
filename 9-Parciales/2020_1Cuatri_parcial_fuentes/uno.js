@@ -1,116 +1,107 @@
 function mostrar() {
-  //Declaro variables
-  let lista_productos = new Array();
-  let producto;
-  let entrada_tipo;
-  let entrada_precio;
-  let entrada_cantidad;
-  let entrada_marca;
-  let entrada_fabricante;
-  let valido;
-  let lista_alcoholes = new Array();
-  let alcohol_barato;
-  let cantidad_jabones;
+  let tipoProducto;
+  let precioProducto;
+  let cantidadProducto;
+  let marcaProducto;
+  let fabricanteProducto;
+  let alcoholBaratoPrecio = 0;
+  let alcoholBaratoMarca;
+  let alcoholBaratoFabricante;
+  let cantidadalcoholes = 0;
+  let cantidadBarbijos = 0;
+  let cantidadJabones = 0;
+  let promedioCompra;
 
-  for (let index = 0; index < 5; index++) {
-    //Entrada de datos
-    entrada_tipo = prompt("Tipo de producto (Alcohol,Jabon,Barbijo)");
-    entrada_precio = parseInt(prompt("Precio (Entra 100 y 300)"));
-    entrada_cantidad = parseInt(
-      prompt("Cantidad de unidades (Entre 1 y 1000)")
-    );
-    entrada_marca = prompt("Marca");
-    entrada_fabricante = prompt("Fabricante");
+  //Inicia el bucle para solicitar los productos
+  for (let index = 0; index <= 5; index++) {
+    tipoProducto = prompt(
+      "Tipo de producto: (Alcohol/Barbijo/Jabon)"
+    ).toLowerCase();
+    precioProducto = parseInt(prompt("Precio por unidad:"));
+    cantidadProducto = parseInt(prompt("Cantidad de unidades:"));
+    marcaProducto = prompt("Marca:");
+    fabricanteProducto = prompt("Fabricante:");
+    //Hago todas las validaciones correspondientes
 
-    //Validar tipo:
+    //Validar tipo
     if (
-      entrada_tipo == "Alcohol" ||
-      entrada_tipo == "Jabon" ||
-      entrada_tipo == "Barbijo"
+      tipoProducto != "alcohol" ||
+      tipoProducto != "jabon" ||
+      tipoProducto != "barbijo"
     ) {
-      valido = true;
-    } else {
-      valido = false;
-      alert("Tipo de producto inválido");
-    }
-
-    //Validar precio:
-    if (entrada_precio < 100 || entrada_precio > 300) {
-      valido = false;
-      alert("El rango de precio es entra 100 y 300");
-    }
-
-    //Validad cantidad:
-    if (entrada_cantidad <= 0 || entrada_cantidad > 1000) {
-      valido = false;
-      alert("La cantidad debe estar entre 1 y 1000");
-    }
-
-    // Agrego el producto al array de lista_productos
-    if (!valido) {
-      alert("Producto mal cargado");
-    } else {
-      switch (entrada_tipo) {
-        case "Alcohol":
-          producto = {
-            Tipo: entrada_tipo,
-            Precio: entrada_precio,
-            Cantidad: entrada_cantidad,
-            Marca: entrada_marca,
-            Fabricante: entrada_fabricante,
-          };
-          lista_productos.push(producto);
-          break;
-        case "Jabon":
-          producto = {
-            Tipo: entrada_tipo,
-            Precio: entrada_precio,
-            Cantidad: entrada_cantidad,
-            Marca: entrada_marca,
-            Fabricante: entrada_fabricante,
-          };
-          lista_productos.push(producto);
-          break;
-        case "Barbijo":
-          producto = {
-            Tipo: entrada_tipo,
-            Precio: entrada_precio,
-            Cantidad: entrada_cantidad,
-            Marca: entrada_marca,
-            Fabricante: entrada_fabricante,
-          };
-          lista_productos.push(producto);
-          break;
+      //Validar precio
+      if (!(precioProducto < 100 || precioProducto > 300)) {
+        //Validar cantidad
+        if (!(cantidadProducto <= 0 || cantidadProducto > 1000)) {
+          switch (tipoProducto) {
+            case "alcohol":
+              //Guardo los datos del alcohol mas barato
+              if (precioProducto < alcoholBaratoPrecio || index == 0) {
+                alcoholBaratoPrecio = precioProducto;
+                alcoholBaratoMarca = marcaProducto;
+                alcoholBaratoFabricante = fabricanteProducto;
+                console.log("Alcohol mas barato: " + alcoholBaratoPrecio);
+              }
+              cantidadalcoholes += cantidadProducto;
+              break;
+            case "jabon":
+              cantidadJabones += cantidadProducto;
+              break;
+            case "barbijo":
+              cantidadBarbijos += cantidadProducto;
+              break;
+          }
+        } else {
+          alert(
+            "La cantidad no puede ser negativa, cero o superar las mil unidades"
+          );
+        }
+      } else {
+        alert("El rango de precio debe estar entre 100 y 300");
       }
-      alert("Producto cargado correctamente!!");
+    } else {
+      alert("Tipo de producto inválido");
+      index--;
     }
   }
 
-  cantidad_jabones = 0;
-  //Itero lista de productos cargados
-  for (let index = 0; index < lista_productos.length; index++) {
-    // Si el producto es de tipo jabon, sunmo el valor de cantidad
-    if (lista_productos[index].Tipo == "Jabon") {
-      cantidad_jabones += lista_productos[index].Cantidad;
-    }
-    if (lista_productos[index].Tipo == "Alcohol") {
-      lista_alcoholes.push(lista_productos[index]);
-    }
-  }
-
-  //Obtengo alcohol barato
-  alcohol_barato = lista_alcoholes.find((elemento) =>
-    Math.min(elemento.Precio)
-  );
-
-  //Respuesta a
+  //Muestro los datos del alcohol mas barato
   alert(
-    "Alcohol mas barato -Fabricante: " +
-      alcohol_barato.Fabricante +
-      " Cantidad: " +
-      alcohol_barato.Cantidad +
-      " de unidades"
+    "Alcohol más barato| Marca: " +
+      alcoholBaratoMarca +
+      " Fabricante: " +
+      alcoholBaratoFabricante
   );
-  //Repuuesta c
-  alert("Cantidad de jabones: " + cantidad_jabones);
+  //Analizo cual es el producto con mayor cantidad, calculo el promedio y lo muestro
+  if (
+    cantidadalcoholes > cantidadBarbijos &&
+    cantidadalcoholes > cantidadJabones
+  ) {
+    promedioCompra = (cantidadalcoholes / 5).toFixed(2);
+    alert(
+      "Tipo de producto con mayor cantidad: Alcohol " +
+        promedioCompra +
+        "promedio"
+    );
+  } else if (
+    cantidadBarbijos > cantidadalcoholes &&
+    cantidadBarbijos > cantidadJabones
+  ) {
+    promedioCompra = (cantidadBarbijos / 5).toFixed(2);
+    alert(
+      "Tipo de producto con mayor cantidad: Barbijos " +
+        promedioCompra +
+        "promedio"
+    );
+  } else {
+    promedioCompra = (cantidadJabones / 5).toFixed(2);
+    alert(
+      "Tipo de producto con mayor cantidad: Jabones " +
+        promedioCompra +
+        "promedio"
+    );
+  }
+
+  // Muestro el total de jabones
+  alert("Cantidad total de jabones comprados: " + cantidadJabones);
 }

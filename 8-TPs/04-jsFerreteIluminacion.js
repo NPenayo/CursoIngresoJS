@@ -8,7 +8,85 @@ E.	Si el importe final con descuento suma más de $120  se debe sumar un 10% de 
  ”Usted pago X de IIBB.”, siendo X el impuesto que se pagó. 
 
  */
-function CalcularPrecio () 
-{
- 	
+function CalcularPrecio() {
+  let cantidad = parseInt(document.getElementById("txtIdCantidad").value);
+  let marca = document.getElementById("Marca").value;
+  let precio = document.getElementById("txtIdprecioDescuento").value;
+  let lampara = cantidad * 35;
+
+  switch (marca) {
+    case "ArgentinaLuz":
+      if (cantidad == 5) {
+        document.getElementById("txtIdprecioDescuento").value =
+          lampara - (lampara * 40) / 100;
+      } else if (cantidad == 4) {
+        document.getElementById("txtIdprecioDescuento").value =
+          lampara - (lampara * 25) / 100;
+      } else {
+        lampara == 3;
+        document.getElementById("txtIdprecioDescuento").value =
+          lampara - (lampara * 15) / 100;
+      }
+      break;
+
+    case "FelipeLamparas":
+      if (cantidad == 5) {
+        document.getElementById("txtIdprecioDescuento").value =
+          lampara - (lampara * 30) / 100;
+      } else if (cantidad == 4) {
+        document.getElementById("txtIdprecioDescuento").value =
+          lampara - (lampara * 25) / 100;
+      } else {
+        lampara == 3;
+        document.getElementById("txtIdprecioDescuento").value =
+          lampara - (lampara * 10) / 100;
+      }
+      break;
+
+    case "JeLuz":
+      if (cantidad == 5) {
+        document.getElementById("txtIdprecioDescuento").value =
+          lampara - (lampara * 30) / 100;
+      } else if (cantidad == 4) {
+        document.getElementById("txtIdprecioDescuento").value =
+          lampara - (lampara * 20) / 100;
+      } else {
+        lampara == 3;
+        document.getElementById("txtIdprecioDescuento").value =
+          lampara - (lampara * 5) / 100;
+      }
+      break;
+
+    case "HazIluminacion":
+      if (cantidad == 5) {
+        document.getElementById("txtIdprecioDescuento").value =
+          lampara - (lampara * 30) / 100;
+      } else if (cantidad == 4) {
+        document.getElementById("txtIdprecioDescuento").value =
+          lampara - (lampara * 20) / 100;
+      } else {
+        lampara == 3;
+        document.getElementById("txtIdprecioDescuento").value =
+          lampara - (lampara * 5) / 100;
+      }
+      break;
+
+    case "Osram ":
+      if (cantidad == 5) {
+        document.getElementById("txtIdprecioDescuento").value =
+          lampara - (lampara * 30) / 100;
+      } else if (cantidad == 4) {
+        document.getElementById("txtIdprecioDescuento").value =
+          lampara - (lampara * 20) / 100;
+      } else {
+        lampara == 3;
+        document.getElementById("txtIdprecioDescuento").value =
+          lampara - (lampara * 5) / 100;
+      }
+      break;
+    default:
+      document.getElementById("txtIdprecioDescuento").value =
+        lampara - (lampara * 50) / 100;
+      break;
+  }
 }
